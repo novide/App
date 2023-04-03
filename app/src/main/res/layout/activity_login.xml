@@ -7,6 +7,19 @@
     android:background="#FFFFFF"
     tools:context=".LoginActivity">
 
+    <Button
+        android:id="@+id/home_bt2"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:foreground="@drawable/home"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.17" />
+
     <RelativeLayout
         android:id="@+id/android_lar"
         android:layout_width="fill_parent"
@@ -15,7 +28,9 @@
         android:clipToOutline="true"
         tools:ignore="MissingConstraints,RedundantNamespace,UnusedAttribute"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteY="34dp" >
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/login_id_label"
@@ -41,8 +56,8 @@
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:hint="id"
-        android:paddingLeft="20dp"
         android:inputType="textPersonName"
+        android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,9 +86,9 @@
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:hint="password"
-        android:paddingLeft="20dp"
         android:inputType="textPassword"
-        android:textColor="#FFFFFF"
+        android:paddingLeft="20dp"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/login_id"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/login_id"
@@ -118,5 +133,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/info_bt2"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:foreground="@drawable/info_bt"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.959"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.17" />
+
+    <Button
+        android:id="@+id/reservation_bt2"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="7dp"
+        android:foreground="@drawable/reservation"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.17" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

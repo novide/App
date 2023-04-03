@@ -1,45 +1,54 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 
 
 public class MainActivity extends AppCompatActivity {
+    private Button info_bt;
+    private Button reservation_bt;
+    private Button home_bt;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        info_bt = findViewById(R.id.info_bt);
+        reservation_bt = findViewById(R.id.reservation_bt);
+        home_bt = findViewById(R.id.home_bt);
+
+        info_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent infoIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(infoIntent);
+            }
+        });
+
+        home_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent homeIntent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(homeIntent);
+            }
+        });
+
+        reservation_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent reservationIntent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(reservationIntent);
+            }
+        });
+
     }
 
-    // 상단바 메뉴 보이게
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_top, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    // 상단바 버튼(if문 써서)
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-
-        if (id == R.id.action_btn1) {
-            Intent homeIntent = new Intent(this, LoginActivity.class);
-            startActivity(homeIntent);
-        }
-        return false;
-    }
 }
