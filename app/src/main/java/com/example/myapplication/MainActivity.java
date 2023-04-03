@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 
-
+//바꾸었어요 선생님
 public class MainActivity extends AppCompatActivity {
     private Button info_bt;
     private Button reservation_bt;
