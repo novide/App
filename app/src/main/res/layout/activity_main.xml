@@ -8,19 +8,19 @@
     android:background="#FFFFFF"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="168dp"
-        android:background="@drawable/solid_bt"
-        android:backgroundTint="#E1DDDD"
-        app:iconifiedByDefault="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="검색어를 입력하시오" />
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="168dp"
+            android:background="@drawable/solid_bt"
+            android:backgroundTint="#E1DDDD"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryHint="검색어를 입력하시오" />
 
     <TextView
         android:id="@+id/textView"
@@ -88,6 +88,4 @@
         app:layout_constraintHorizontal_bias="0.285"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.17" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
