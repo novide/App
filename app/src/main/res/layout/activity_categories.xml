@@ -73,39 +73,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.17" />
 
-    <Button
-        android:id="@+id/logout_bt"
-        android:layout_width="wrap_content"
-        android:layout_height="75dp"
-        android:layout_marginEnd="68dp"
-        android:foreground="@drawable/log_out"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/info_bt3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.492" />
-
-    <Button
-        android:id="@+id/setting_bt"
-        android:layout_width="wrap_content"
-        android:layout_height="75dp"
-        android:layout_marginTop="280dp"
-        android:foreground="@drawable/setting_bt"
-        android:text="Button"
-        app:layout_constraintEnd_toStartOf="@+id/logout_bt"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/notice"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/notice"
-        android:layout_width="wrap_content"
-        android:layout_height="75dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="280dp"
-        android:foreground="@drawable/notice"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
