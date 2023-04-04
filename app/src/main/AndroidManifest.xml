@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
-<!--    https 연결 코드-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- https 연결 코드 -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-
         android:usesCleartextTraffic="true">
-<!--        https -> http 접근 코드-->
-
+        <activity
+            android:name=".LoginSuccess"
+            android:exported="false" />
+        <!-- https -> http 접근 코드 -->
         <activity
             android:name=".CategoriesActivity"
             android:exported="false" />

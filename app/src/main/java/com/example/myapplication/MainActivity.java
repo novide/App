@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -48,8 +49,15 @@ public class MainActivity extends AppCompatActivity {
         info_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent infoIntent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent infoIntent;
+                if (isLogin()) { // 로그인한 상태라면
+                    infoIntent = new Intent(MainActivity.this, LoginSuccess.class);
+                } else { // 로그인하지 않은 상태라면
+                    infoIntent = new Intent(MainActivity.this, LoginActivity.class);
+                }
                 startActivity(infoIntent);
+//                Intent infoIntent = new Intent(MainActivity.this, LoginActivity.class);
+//                startActivity(infoIntent);
             }
         });
 
@@ -68,5 +76,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(reservationIntent);
             }
         });
+    }
+
+    // 로그인 되었는지 안되었는지 확인하는 함수
+    private boolean isLogin() {
+        SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        return preferences.getBoolean("isLogin", false);
     }
 }

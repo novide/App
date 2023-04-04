@@ -5,12 +5,14 @@ import androidx.appcompat.widget.Toolbar;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button info_bt;
     private Button reservation_bt;
     private Button home_bt;
-
 
     //  로그인을 하기위한 변수
     private static final String TAG = "MainActivity";
@@ -52,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         login_bt = findViewById(R.id.login_bt);
         info_bt = findViewById(R.id.info_bt2);
         reservation_bt = findViewById(R.id.reservation_bt2);
-        home_bt = findViewById(R.id.home_bt2);
+        home_bt = findViewById(R.id.home_bt3);
         //화면의 입력을 찾는 코드
         username_edit = (EditText)findViewById(R.id.login_id);    // id 에디트를 찾음.
         password_edit = (EditText)findViewById(R.id.login_pass);    // pw 에디트를 찾음.
@@ -170,9 +171,16 @@ public class LoginActivity extends AppCompatActivity {
                 if (result.equals("success")) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
+                    saveLogin(); // 로그인 정보 저장
                 }
             }
         }
+        private void saveLogin() {
+            SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("isLogin", true);
+            editor.apply();
+        }
     }
-
 }
