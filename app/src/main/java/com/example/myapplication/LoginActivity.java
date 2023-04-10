@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,13 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
+import com.example.myapplication.domain.LoginRequest;
+import com.example.myapplication.retrofit.ApiService;
+import com.example.myapplication.retrofit.NetworkHelper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -71,10 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         login_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginTask loginTask = new LoginTask();
-                loginTask.execute();
-//                Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
-//                startActivity(loginIntent);
+                login();
             }
         });
 
@@ -105,82 +109,61 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    // 실시간 로그인 저장    !! 적용안됨
+    private void saveLogin() {
+        SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLogin", true);
+        editor.apply();
+    }
 
     // 로그인시
-    // AsyncTask 클래스를 상속하여 서버와 통신하는 코드를 작성
-    private class LoginTask extends AsyncTask<Void, Void, String> {
+    //retrofit 통신
+    private void login() {
+        String username = username_edit.getText().toString();
+        String password = password_edit.getText().toString();
 
-        // 서버 주소
-        private static final String SERVER_ADDRESS = "http://172.30.1.32:8080";
+        if (username.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "아이디를 입력하세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // 서버 API 경로
-        private static final String API_PATH = "/api/login";
+        if (password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        LoginRequest loginRequest = new LoginRequest(username, password);
+        Call<String> call = NetworkHelper.getInstance().getApiService().login(loginRequest);
 
-        @Override
-        protected String doInBackground(Void... voids) {
-            HttpURLConnection conn = null;
-            try {
-                // 서버 API에 POST 요청을 보내기 위한 설정
-                URL url = new URL(SERVER_ADDRESS + API_PATH);
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setDoOutput(true);
-
-                // 요청 바디에 전송할 데이터
-                String requestBody = "{\"username\": \"" + username_edit.getText().toString() +
-                        "\", \"password\": \"" + password_edit.getText().toString() + "\"}";
-
-                // 단순 확인용 프린트
-                System.out.println(username_edit.getText().toString());
-                System.out.println(password_edit.getText().toString());
-                // 요청 바디 전송
-                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                osw.write(requestBody);
-                osw.flush();
-                osw.close();
-
-                // 서버 응답 받기
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-                while ((line = br.readLine()) != null) {
-                    sb.append(line);
-                }
-                br.close();
-
-                return sb.toString();
-
-            } catch (MalformedURLException e) {
-                Log.e(TAG, "MalformedURLException: " + e.getMessage());
-            } catch (IOException e) {
-                Log.e(TAG, "IOException: " + e.getMessage());
-            } finally {
-                if (conn != null) {
-                    conn.disconnect();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body();
+                    if (responseBody != null && responseBody.equals("success")) {
+                        // "success" 문자열이 도착한 경우 처리할 코드 작성
+                        // 서버로부터 정상적인 응답을 받은 경우 처리하는 코드
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // 서버로부터 다른 응답이 도착한 경우 처리할 코드 작성
+                        Log.e(TAG, "Invalid response");
+                    }
+                } else {
+                    // 서버로부터 오류 응답이 도착한 경우 처리할 코드 작성
+                    Log.e(TAG, "Response failed");
                 }
             }
-            return null;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                // 서버에서 받은 결과를 처리하는 코드
-                // 예시: 서버에서 받은 결과가 "success"일 경우에만 로그인 성공 처리
-                if (result.equals("success")) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
-                    saveLogin(); // 로그인 정보 저장
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                if (t instanceof IOException) {
+                    Log.e(TAG, "Network failure");
+                } else {
+                    Log.e(TAG, "Unexpected failure");
                 }
             }
-        }
-        private void saveLogin() {
-            SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("isLogin", true);
-            editor.apply();
-        }
+        });
     }
 }
