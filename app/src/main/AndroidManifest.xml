@@ -13,16 +13,14 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".LoginSuccess"
+            android:name=".RestaurantRegisterActivity"
             android:exported="false" />
-        <!-- https -> http 접근 코드 -->
+        <activity
+            android:name=".LoginSuccess"
+            android:exported="false" /> <!-- https -> http 접근 코드 -->
         <activity
             android:name=".CategoriesActivity"
             android:exported="false" />
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false"
-            android:parentActivityName=".LoginActivity" />
         <activity
             android:name=".LoginActivity"
             android:exported="false"

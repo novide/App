@@ -3,7 +3,6 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,21 +13,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myapplication.domain.LoginRequest;
-import com.example.myapplication.retrofit.ApiService;
 import com.example.myapplication.retrofit.NetworkHelper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 
 public class LoginActivity extends AppCompatActivity {
     private Button login_register_bt;
@@ -42,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private EditText username_edit;                // id 에디트
     private EditText password_edit;                // pw 에디트
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,13 +98,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    // 실시간 로그인 저장    !! 적용안됨
-    private void saveLogin() {
-        SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isLogin", true);
-        editor.apply();
-    }
 
     // 로그인시
     //retrofit 통신
@@ -146,6 +128,12 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                        saveLogin();
+                    } else if (responseBody != null && responseBody.equals("admin")) {
+                        Intent intent = new Intent(LoginActivity.this, RestaurantRegisterActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(LoginActivity.this, "관리자 아이디", Toast.LENGTH_SHORT).show();
+                        saveLogin();
                     } else {
                         // 서버로부터 다른 응답이 도착한 경우 처리할 코드 작성
                         Log.e(TAG, "Invalid response");
@@ -165,5 +153,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    // 실시간 로그인 저장    !! 적용안됨
+    private void saveLogin() {
+        SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLogin", true);
+        editor.apply();
     }
 }

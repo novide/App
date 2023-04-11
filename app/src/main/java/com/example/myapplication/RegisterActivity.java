@@ -11,29 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.myapplication.domain.LoginRequest;
 import com.example.myapplication.domain.RegisterRequest;
 import com.example.myapplication.domain.ValidatefDuplicateUsername;
-import com.example.myapplication.retrofit.ApiService;
 import com.example.myapplication.retrofit.NetworkHelper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
     private Button register_bt;
-
     private Button validatefDuplicate_bt;
-
 
     // 회원가입 변수
     private static final String TAG = "MainActivity";
@@ -41,7 +31,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password_edit;                // pw 에디트
     private EditText name_edit;                // name 에디트
     private EditText password_check_edit;     // pw 체크 에디트
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
