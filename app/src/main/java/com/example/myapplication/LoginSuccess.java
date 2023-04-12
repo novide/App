@@ -20,7 +20,7 @@ public class LoginSuccess extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_success);
 
-        Toolbar toolbar5 = findViewById(R.id.toolbar5);
+        Toolbar toolbar5 = findViewById(R.id.toolbar6);
         setSupportActionBar(toolbar5);
         // 뒤로가기 버튼
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
