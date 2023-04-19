@@ -223,7 +223,6 @@
         app:layout_constraintWidth_percent="0.17"
         tools:ignore="SpeakableTextPresentCheck"
         tools:srcCompat="@tools:sample/avatars" />
-
     <ImageButton
         android:id="@+id/restaurant_menu_btn"
         android:layout_width="48dp"
