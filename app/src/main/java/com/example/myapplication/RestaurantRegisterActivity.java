@@ -2,12 +2,8 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -21,14 +17,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.domain.Menu;
-import com.example.myapplication.domain.RegisterRequest;
-import com.example.myapplication.domain.Restaurant;
+import com.example.myapplication.domain.RestaurantRequest;
 import com.example.myapplication.retrofit.NetworkHelper;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,27 +50,30 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
     private List<Menu> menuList;
     //-----------------------
 
+    // 식당 이미지 불러오기 위한 위젯 변수들
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageButton restaurant_img_btn;
     private TextView restaurant_img;
 
+    // 메뉴 이미지 불러오기 위한 위젯 변수들
     private static final int PICK_IMAGE_REQUEST1 = 2;
-
     private ImageButton restaurant_menu_btn;
-
     private TextView restaurant_menu_img;
+
     private EditText restaurant_name;
     private EditText restaurant_loc;
     private EditText restaurant_runtime;
-    private EditText menuEditText;
-    private EditText priceEditText;
-    private ListView menuListView;
-    private ListView priceListView;
-    private ImageButton restaurant_addmenu_btn;
+    private EditText restaurant_menu;
+    private EditText restaurant_price;
     private Button restaurant_register_btn;
 
-    private ArrayList<String> menuNameList;
-    private ArrayList<String> priceList;
+    // 식당 메뉴, 가격 등록 위젯 버튼
+    private ImageButton restaurant_addmenu_btn;
+
+    // 등록한 식당 메뉴, 가격 아래에 나오게 해주는 위젯
+    private ScrollView scrollView2;
+
+    private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +88,9 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         restaurant_loc = findViewById(R.id.restaurant_loc);
         restaurant_runtime = findViewById(R.id.restaurant_runtime);
 
-        menuEditText = findViewById(R.id.restaurant_menu);
-        priceEditText = findViewById(R.id.restaurant_price);
-        menuListView = findViewById(R.id.menu_list_view);
-        priceListView = findViewById(R.id.price_list_view);
+        restaurant_menu = findViewById(R.id.restaurant_menu);
+        restaurant_price = findViewById(R.id.restaurant_price);
         restaurant_addmenu_btn = findViewById(R.id.restaurant_addmenu_btn);
-
-        menuNameList = new ArrayList<>();
-        priceList = new ArrayList<>();
 
         restaurant_img_btn = findViewById(R.id.restaurant_img_btn);
         restaurant_img = findViewById(R.id.restaurant_img);
@@ -102,6 +98,9 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         restaurant_menu_btn = findViewById(R.id.restaurant_menu_btn);
         restaurant_menu_img = findViewById(R.id.restaurant_menu_img);
         restaurant_register_btn = findViewById(R.id.restaurant_register_btn);
+
+        scrollView2 = findViewById(R.id.scrollView2);
+        linearLayout = findViewById(R.id.linearLayout);
 
         // 식당 이미지 선택 창 띄우기
         restaurant_img_btn.setOnClickListener(new View.OnClickListener() {
@@ -128,12 +127,43 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         restaurant_addmenu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String menuName = menuEditText.getText().toString().trim();
-                String price = priceEditText.getText().toString().trim();
+                String menuName = restaurant_menu.getText().toString().trim();
+                String price = restaurant_price.getText().toString().trim();
+                // 메뉴 아이템을 추가할 뷰 생성
+                LinearLayout itemLayout = new LinearLayout(RestaurantRegisterActivity.this);
+                itemLayout.setLayoutParams(new LinearLayout.LayoutParams(  // LinearLayout의 레이아웃 속성을 설정
+                        LinearLayout.LayoutParams.MATCH_PARENT,       // 첫번째 인수 : 레이아웃의 너비
+                        LinearLayout.LayoutParams.WRAP_CONTENT));     // 두번째 인수 : 레이아웃의 높이
+                itemLayout.setOrientation(LinearLayout.HORIZONTAL);   // 가로로 정렬되게( 메뉴, 가격 순으로)
 
-                // 메뉴와 가격을 리스트에 추가
-                menuNameList.add(menuName);
-                priceList.add(price);
+                // 메뉴 텍스트뷰 생성
+                TextView menuTextView = new TextView(RestaurantRegisterActivity.this);
+                menuTextView.setText(restaurant_menu.getText().toString());
+                menuTextView.setTextSize(18);
+                menuTextView.setPadding(20,20,0,0);
+                menuTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,             // 가로 방향에서 1의 비율을 가짐을 의미
+                        LinearLayout.LayoutParams.WRAP_CONTENT, 1f)); //  LinearLayout의 다른 자식 View와 함께 놓였을 때,
+                // LinearLayout 내에서의 가로 방향의 비율을 1:1로 맞출 수 있음
+
+                // 가격 텍스트뷰 생성
+                TextView priceTextView = new TextView(RestaurantRegisterActivity.this);
+                priceTextView.setText(restaurant_price.getText().toString());
+                priceTextView.setTextSize(18);
+                priceTextView.setPadding(0,20,35,0);
+                priceTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                // "restaurant_menu"와 "restaurant_price" 뷰를 linearLayout에 추가
+                itemLayout.addView(menuTextView);
+                itemLayout.addView(priceTextView);
+                linearLayout.addView(itemLayout);
+
+                // EditText 비우기
+                restaurant_menu.setText("");
+                restaurant_price.setText("");
+                restaurant_menu_img.setText("");
 
                 // 이미지 경로를 리스트에 추가
                 if (menuImgUriList == null) {
@@ -142,19 +172,6 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
                 } else {
                     menuImgUriList.add(menuImgUri);
                 }
-
-                // 리스트뷰 어댑터 생성
-                ArrayAdapter<String> menuAdapter = new ArrayAdapter<>(RestaurantRegisterActivity.this, android.R.layout.simple_list_item_1, menuNameList);
-                ArrayAdapter<String> priceAdapter = new ArrayAdapter<>(RestaurantRegisterActivity.this, android.R.layout.simple_list_item_1, priceList);
-
-                // 리스트뷰에 어댑터 설정
-                menuListView.setAdapter(menuAdapter);
-                priceListView.setAdapter(priceAdapter);
-
-                // 입력 필드 초기화
-                menuEditText.setText("");
-                priceEditText.setText("");
-
                 // 이미지 경로가 저장된 변수 초기화
                 menuImgUri = null;
                 // 서버에 보낼 메뉴객체에 추가
@@ -172,17 +189,9 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         restaurant_register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                restaurantRegister();
-                test();
+                restaurantRegister();
             }
         });
-//        //저장소 접근권한
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-//                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-//        }
     }
 
     // 갤러리에서 이미지 선택 후 돌아왔을 때 실행되는 메서드
@@ -249,6 +258,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     // 식당등록시
     //retrofit 통신
     private void restaurantRegister() {
@@ -277,23 +287,23 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
             return;
         }
         // Restaurant 객체를 생성하고 필드 값들을 설정한 후 서버로 전송
-        Restaurant restaurant = new Restaurant(restaurantName,restaurantLoc,restaurantRuntime,menuList);
+        RestaurantRequest restaurantRequest = new RestaurantRequest(restaurantName,restaurantLoc,restaurantRuntime,menuList);
+        Gson gson = new Gson();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), gson.toJson(restaurantRequest));
 
         // 식당이미지Uri 파일화
-//        File restaurnatImgFile = new File(getRealPathFromURI(restaurantImgUri));
-        File restaurnatImgFile = new File(restaurantImgUri.getPath());
-        RequestBody imageRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), restaurnatImgFile);
-        MultipartBody.Part restaurnatImgPart = MultipartBody.Part.createFormData("restaurantImg", restaurnatImgFile.getName(), imageRequestBody);
-
-        if (restaurnatImgFile == null){
+        File restaurantImgFile = getRealPathFromURI(restaurantImgUri);
+        if (restaurantImgFile == null){
             System.out.println("파일이 등록안됨");
         }
+        RequestBody imageRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), restaurantImgFile);
+        MultipartBody.Part restaurantImgPart = MultipartBody.Part.createFormData("restaurantImg", restaurantImgFile.getName(), imageRequestBody);
+
 
         // 메뉴이미지Uri 파일화
         List<File> menuImgFiles = new ArrayList<>();
         for (Uri uri : menuImgUriList) {
-//            File imgFile = new File(getRealPathFromURI(uri));
-            File imgFile = new File(uri.getPath());
+            File imgFile = getRealPathFromURI(uri);
             menuImgFiles.add(imgFile);
         }
 
@@ -306,7 +316,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
             menuImgParts.add(imagePart);
         }
         //  retrofit통신
-        Call<String> call = NetworkHelper.getInstance().getApiService().restaurantRegister(restaurant,restaurnatImgPart,menuImgParts);
+        Call<String> call = NetworkHelper.getInstance().getApiService().restaurantRegister(requestBody,restaurantImgPart,menuImgParts);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -340,58 +350,10 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-    // 테스트
-    //retrofit 통신
-    private void test() {
-
-        // 식당이미지Uri 파일화
-//        File restaurnatImgFile = new File(getRealPathFromURI(restaurantImgUri));
-        File restaurnatImgFile = getRealPathFromURI(restaurantImgUri);
-        RequestBody imageRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), restaurnatImgFile);
-        MultipartBody.Part restaurnatImgPart = MultipartBody.Part.createFormData("restaurantImg", restaurnatImgFile.getName(), imageRequestBody);
-
-        //  retrofit통신
-        Call<String> call = NetworkHelper.getInstance().getApiService().test(restaurnatImgPart);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    String responseBody = response.body();
-                    if (responseBody != null && responseBody.equals("success")) {
-                        // "success" 문자열이 도착한 경우 처리할 코드 작성
-                        // 서버로부터 정상적인 응답을 받은 경우 처리하는 코드
-                        Intent intent = new Intent(RestaurantRegisterActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        Toast.makeText(RestaurantRegisterActivity.this, "테스트 이미지 저장 성공", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // 서버로부터 다른 응답이 도착한 경우 처리할 코드 작성
-                        Log.e(TAG, "Invalid response");
-                    }
-                } else {
-                    // 서버로부터 오류 응답이 도착한 경우 처리할 코드 작성
-                    Log.e(TAG, "Response failed"); //username 중복
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                if (t instanceof IOException) {
-                    Log.e(TAG, "Network failure");
-                    t.printStackTrace();
-                } else {
-                    Log.e(TAG, "Unexpected failure");
-                }
-            }
-        });
-    }
     /// 이미url 파일 Path로 변환
     private File getRealPathFromURI(Uri imageUri) {
+        System.out.println("들어옴");
+        String filePath = "";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // Android 10 이상에서는 MediaStore API를 사용하여 파일에 액세스해야합니다.
             try (Cursor cursor = getContentResolver().query(imageUri,
@@ -399,8 +361,10 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
                     null, null, null)) {
                 if (cursor != null && cursor.moveToFirst()) {
                     String fileName = cursor.getString(0);
-                    File imgFile = new File(Environment.getExternalStorageDirectory(), fileName);
+//                    File imgFile = new File(Environment.getExternalStorageDirectory(), fileName);
 //                    File imgFile = new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName);
+//                    File imgFile = new File(getFilesDir(), fileName);
+                    File imgFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);  //최종 가상 디바이스 Download파일 내 이미지
                     // imgFile을 사용하여 파일 작업을 수행합니다.
                     return imgFile;
                 }
@@ -417,7 +381,8 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
             // imgFile을 사용하여 파일 작업을 수행합니다.
             // ...
             return imgFile;
-        }
+    }
+        System.out.println("null이 리텀됨");
         return null;
     }
 

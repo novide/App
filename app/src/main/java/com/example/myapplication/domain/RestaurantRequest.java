@@ -2,7 +2,7 @@ package com.example.myapplication.domain;
 
 import java.util.List;
 
-public class Restaurant {
+public class RestaurantRequest {
     private String restaurantName;   // 식당이름 정보
     private String restaurantLocation;// 식당 위치 정보
     private String restaurantOperatingTime; // 운영시간 정보
@@ -38,7 +38,7 @@ public class Restaurant {
     public void setMenuList(List<Menu> menuList) {
         this.menuList = menuList;
     }
-    public Restaurant(String restaurantName, String restaurantLocation, String restaurantOperatingTime, List<Menu> menuList) {
+    public RestaurantRequest(String restaurantName, String restaurantLocation, String restaurantOperatingTime, List<Menu> menuList) {
         this.restaurantName = restaurantName;
         this.restaurantLocation = restaurantLocation;
         this.restaurantOperatingTime = restaurantOperatingTime;
