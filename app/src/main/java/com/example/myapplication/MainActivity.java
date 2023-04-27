@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         reservation_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent reservationIntent = new Intent(MainActivity.this, MainActivity.class);
+                Intent reservationIntent = new Intent(MainActivity.this, CategoriesActivity.class);
                 startActivity(reservationIntent);
             }
         });

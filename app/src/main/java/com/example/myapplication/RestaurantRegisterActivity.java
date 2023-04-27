@@ -338,6 +338,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
                 }
             }
 
+
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 if (t instanceof IOException) {
@@ -349,10 +350,8 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         });
     }
 
-
     /// 이미url 파일 Path로 변환
     private File getRealPathFromURI(Uri imageUri) {
-        System.out.println("들어옴");
         String filePath = "";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // Android 10 이상에서는 MediaStore API를 사용하여 파일에 액세스해야합니다.
@@ -385,5 +384,4 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         System.out.println("null이 리텀됨");
         return null;
     }
-
 }
