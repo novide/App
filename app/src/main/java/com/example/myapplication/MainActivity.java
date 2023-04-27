@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 
-//바꾸었어요 선생님
+//새로운 이미지 저장
 public class MainActivity extends AppCompatActivity {
     private Button info_bt;
     private Button reservation_bt;
