@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,16 +20,29 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.myapplication.retrofit.NetworkHelper;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CategoriesActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     private Button info_bt;
     private Button reservation_bt;
     private Button home_bt;
+
+    List<String> getRestaurantNameList;
+
+    List<Bitmap> getImgBitmapList;
 
     ScrollView scrollView = findViewById(R.id.scrollView3);
 
@@ -57,7 +71,11 @@ public class CategoriesActivity extends AppCompatActivity {
 
         List<String> restaurantNameList= new ArrayList<>();
 
-        showImgAndRestaurantName(imgFileList, restaurantNameList);
+        if(getImgBitmapList.isEmpty() && getRestaurantNameList.isEmpty()){
+            Log.e(TAG, "식당이 없습니다.");
+        }else {
+            showImgAndRestaurantName(imgFileList, restaurantNameList);
+        }
 
         info_bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,5 +152,41 @@ public class CategoriesActivity extends AppCompatActivity {
             linearLayout.addView(imageView);
             linearLayout.addView(textView);
         }
+    }
+
+    private void getImgListAndRestaurantNameList(){
+        Call<Map<String, Object>> call = NetworkHelper.getInstance().getApiService().getRestaurantData();
+        call.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                if (response.isSuccessful()) {
+                    // 데이터를 정상적으로 받아온 경우 처리할 로직을 작성합니다.
+                    Map<String, Object> data = response.body();
+                    List<String> restaurantNameList = (List<String>) data.get("restaurantNameList");
+                    List<String> imageList = (List<String>) data.get("imageList");
+                    List<Bitmap> imgBitmapList = new ArrayList<>();
+                    for (String image : imageList) {
+                        byte[] imageBytes = android.util.Base64.decode(image, android.util.Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                        imgBitmapList.add(bitmap);
+                    }
+                    getImgBitmapList = imgBitmapList;
+                    getRestaurantNameList = restaurantNameList;
+                    // 받아온 데이터를 이용하여 UI를 업데이트합니다.
+                } else {
+                    // 데이터를 받아오는 도중 오류가 발생한 경우 처리할 로직을 작성합니다.
+                    Log.e(TAG, "Response failed"); //username 중복
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                if (t instanceof IOException) {
+                    Log.e(TAG, "Network failure");
+                } else {
+                    Log.e(TAG, "Unexpected failure");
+                }
+            }
+        });
     }
 }
