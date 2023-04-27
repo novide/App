@@ -223,7 +223,6 @@
         app:layout_constraintWidth_percent="0.17"
         tools:ignore="SpeakableTextPresentCheck"
         tools:srcCompat="@tools:sample/avatars" />
-
     <ImageButton
         android:id="@+id/restaurant_menu_btn"
         android:layout_width="48dp"
@@ -252,8 +251,8 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="300dp"
-        android:layout_height="210dp"
+        android:layout_width="305dp"
+        android:layout_height="112dp"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -261,22 +260,14 @@
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-            <ListView
-                android:id="@+id/menu_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-
-            <ListView
-                android:id="@+id/price_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
         </LinearLayout>
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

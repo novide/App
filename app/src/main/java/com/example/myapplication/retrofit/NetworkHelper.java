@@ -22,7 +22,7 @@ public class NetworkHelper {
                 .setLenient()
                 .create();
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.30.1.2:8080")
+                .baseUrl("http://192.168.219.101:8080")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
