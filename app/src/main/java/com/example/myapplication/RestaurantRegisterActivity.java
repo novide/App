@@ -299,14 +299,12 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         RequestBody imageRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), restaurantImgFile);
         MultipartBody.Part restaurantImgPart = MultipartBody.Part.createFormData("restaurantImg", restaurantImgFile.getName(), imageRequestBody);
 
-
         // 메뉴이미지Uri 파일화
         List<File> menuImgFiles = new ArrayList<>();
         for (Uri uri : menuImgUriList) {
             File imgFile = getRealPathFromURI(uri);
             menuImgFiles.add(imgFile);
         }
-
 
         // imageFiles 리스트에 이미지 파일들을 추가
         List<MultipartBody.Part> menuImgParts = new ArrayList<>();
@@ -338,7 +336,6 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
                 }
             }
 
-
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 if (t instanceof IOException) {
@@ -349,6 +346,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
             }
         });
     }
+
 
     /// 이미url 파일 Path로 변환
     private File getRealPathFromURI(Uri imageUri) {

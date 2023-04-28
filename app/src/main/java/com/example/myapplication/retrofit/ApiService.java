@@ -31,7 +31,7 @@ public interface ApiService {
     @Multipart
     @POST("api/test")
     Call<String> test(@Part MultipartBody.Part restaurantImg);
-    @GET("/getRestaurantData")
+    @GET("api/getRestaurantData")
     Call<Map<String, Object>> getRestaurantData();
 
 }
