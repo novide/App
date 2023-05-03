@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SearchPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyAdapter"
             android:exported="false" />
         <activity

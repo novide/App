@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,6 +103,23 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
 
         scrollView2 = findViewById(R.id.scrollView2);
         linearLayout = findViewById(R.id.linearLayout);
+
+        Spinner spn = (Spinner) findViewById(R.id.spn_SPList);
+
+        ArrayAdapter spn_adapter = ArrayAdapter.createFromResource(this, R.array.FoodVariety, android.R.layout.simple_spinner_item);
+        spn_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn.setAdapter(spn_adapter);
+
+        // 카테고리 리스트 함수
+        spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String a = spn.getSelectedItem().toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         // 식당 이미지 선택 창 띄우기
         restaurant_img_btn.setOnClickListener(new View.OnClickListener() {

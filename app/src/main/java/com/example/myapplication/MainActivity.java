@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(MainActivity.this, CategoriesActivity.class);
+                Intent intent = new Intent(MainActivity.this, SearchPageActivity.class);
                 intent.putExtra("search_query", query);
                 startActivity(intent);
                 return true;
