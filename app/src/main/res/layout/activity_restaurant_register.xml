@@ -48,11 +48,12 @@
         app:layout_constraintTop_toBottomOf="@+id/restaurant_name_txt"
         tools:ignore="SpeakableTextPresentCheck" />
 
+
     <EditText
         android:id="@+id/restaurant_loc"
         android:layout_width="250dp"
         android:layout_height="48dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="29dp"
         android:background="@drawable/solid_bt"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
@@ -61,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="@+id/restaurant_name"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/restaurant_name"
-        app:layout_constraintTop_toBottomOf="@+id/restaurant_loc_txt"
+        app:layout_constraintTop_toTopOf="@+id/restaurant_loc_txt"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
@@ -74,13 +75,13 @@
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="@+id/restaurant_loc"
+        app:layout_constraintStart_toStartOf="@+id/restaurant_loc"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_runtime_txt"
         tools:ignore="SpeakableTextPresentCheck" />
 
-
     <EditText
         android:id="@+id/restaurant_menu"
-        android:layout_width="90dp"
+        android:layout_width="110dp"
         android:layout_height="48dp"
         android:background="@drawable/solid_bt"
         android:backgroundTint="#FFFFFF"
@@ -88,47 +89,35 @@
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toStartOf="@+id/restaurant_price"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/restaurant_runtime"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_menu_txt"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/restaurant_price"
-        android:layout_width="90dp"
+        android:layout_width="110dp"
         android:layout_height="50dp"
         android:background="@drawable/solid_bt"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/spn_SPList"
+        app:layout_constraintEnd_toEndOf="@+id/spn_SPList"
         app:layout_constraintTop_toTopOf="@+id/restaurant_menu"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spn_SPList"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="4dp"
-        android:paddingRight="30dp"
-        android:popupBackground="#2540FF"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="@+id/restaurant_runtime"
-        app:layout_constraintTop_toBottomOf="@+id/restaurant_price_txt"
-        tools:ignore="SpeakableTextPresentCheck"/>
 
     <EditText
         android:id="@+id/restaurant_menu_img"
         android:layout_width="190dp"
         android:layout_height="48dp"
-        android:layout_marginTop="4dp"
         android:background="@drawable/solid_bt"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.366"
+        app:layout_constraintHorizontal_bias="0.361"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_menu_img_txt"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -159,7 +148,7 @@
         android:id="@+id/restaurant_loc_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:text="식당 위치"
         app:layout_constraintEnd_toEndOf="@+id/restaurant_name_txt"
         app:layout_constraintHorizontal_bias="0.0"
@@ -170,7 +159,7 @@
         android:id="@+id/restaurant_runtime_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:text="운영 시간"
         app:layout_constraintEnd_toEndOf="@+id/restaurant_img_txt"
         app:layout_constraintHorizontal_bias="0.0"
@@ -178,35 +167,48 @@
         app:layout_constraintTop_toBottomOf="@+id/restaurant_loc" />
 
     <TextView
+        android:id="@+id/restaurant_categories_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="카테고리"
+        app:layout_constraintEnd_toEndOf="@+id/restaurant_img_txt"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/restaurant_img_txt"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_runtime" />
+
+    <TextView
         android:id="@+id/restaurant_menu_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         android:text="메뉴"
+        app:layout_constraintEnd_toStartOf="@+id/restaurant_price"
+        app:layout_constraintHorizontal_bias="0.009"
         app:layout_constraintStart_toStartOf="@+id/restaurant_runtime_txt"
-        app:layout_constraintTop_toBottomOf="@+id/restaurant_runtime" />
+        app:layout_constraintTop_toBottomOf="@+id/spn_SPList" />
 
     <TextView
         android:id="@+id/restaurant_price_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
+        android:layout_marginStart="108dp"
         android:layout_marginTop="4dp"
         android:text="가격"
         app:layout_constraintBottom_toTopOf="@+id/restaurant_price"
         app:layout_constraintStart_toEndOf="@+id/restaurant_menu_txt"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_runtime"
-        app:layout_constraintVertical_bias="0.205" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/restaurant_menu_img_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         android:text="메뉴 이미지"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.236"
+        app:layout_constraintHorizontal_bias="0.233"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_menu" />
 
@@ -250,18 +252,20 @@
         android:id="@+id/restaurant_addmenu_btn"
         android:layout_width="52dp"
         android:layout_height="54dp"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.232"
+        app:layout_constraintHorizontal_bias="0.179"
         app:layout_constraintStart_toEndOf="@+id/restaurant_menu_img"
-        app:layout_constraintTop_toBottomOf="@+id/restaurant_menu_img_txt"
+        app:layout_constraintTop_toTopOf="@+id/restaurant_menu_img"
+        app:layout_constraintWidth_percent="0.17"
         tools:ignore="SpeakableTextPresentCheck"
-        tools:srcCompat="@tools:sample/avatars"
-        app:layout_constraintWidth_percent="0.17"/>
+        tools:srcCompat="@tools:sample/avatars" />
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="305dp"
-        android:layout_height="112dp"
+        android:layout_height="114dp"
+        android:layout_marginTop="16dp"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -272,11 +276,34 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
         </LinearLayout>
 
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:background="@drawable/solid_bt"
+        android:backgroundTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/restaurant_runtime"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_categories_txt" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spn_SPList"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#000000"
+        android:paddingRight="30dp"
+        android:popupBackground="#FFFFFF"
+        android:spinnerMode="dropdown"
+        android:paddingLeft="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/restaurant_runtime"
+        app:layout_constraintStart_toStartOf="@+id/restaurant_runtime"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_categories_txt"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
