@@ -45,7 +45,7 @@ public class SearchPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+        setContentView(R.layout.activity_search_page);
 
         Toolbar toolbar4 = findViewById(R.id.toolbar4);
         setSupportActionBar(toolbar4);
