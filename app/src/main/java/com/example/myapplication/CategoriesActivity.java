@@ -7,37 +7,18 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
-import com.example.myapplication.domain.ListViewData;
-import com.example.myapplication.retrofit.NetworkHelper;
 import com.google.android.material.tabs.TabLayout;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CategoriesActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private Button info_bt;
     private Button reservation_bt;
     private Button home_bt;
-
-    ArrayList<ListViewData> restaurantDataList;
-    MyAdapter myAdapter;
-
     ViewPager viewPager;
 
     @Override
@@ -65,13 +46,6 @@ public class CategoriesActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-
-//        // 식당 목록 나열해주는 변수 및 함수
-//        ListView listView = findViewById(R.id.restaurantListView);
-//        restaurantDataList = new ArrayList<ListViewData>();
-//        myAdapter = new MyAdapter(this, restaurantDataList);
-//        listView.setAdapter(myAdapter);
-//        getImgListAndRestaurantNameList();
 
         info_bt.setOnClickListener(new View.OnClickListener() {
             @Override

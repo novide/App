@@ -7,7 +7,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
-        android:id="@+id/restaurantListView"
+        android:id="@+id/koreaFoodListView"
         android:layout_width="match_parent"
         android:layout_height="600dp"
         app:layout_constraintBottom_toBottomOf="parent"

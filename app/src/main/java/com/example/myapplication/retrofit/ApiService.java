@@ -1,5 +1,6 @@
 package com.example.myapplication.retrofit;
 
+import com.example.myapplication.domain.GetRestaurant;
 import com.example.myapplication.domain.LoginRequest;
 import com.example.myapplication.domain.RegisterRequest;
 import com.example.myapplication.domain.RestaurantRequest;
@@ -32,8 +33,8 @@ public interface ApiService {
     @Multipart
     @POST("api/test")
     Call<String> test(@Part MultipartBody.Part restaurantImg);
-    @GET("api/getRestaurantData")
-    Call<Map<String, Object>> getRestaurantData();
+    @GET("api/getRestaurantInfo")
+    Call<GetRestaurant> getRestaurantData(@Query("restaurantName")String restaurantName);
     @GET("api/getRestaurantSearchData")
     Call<Map<String, Object>> getRestaurantSearchData(@Query("restaurantName")String restaurantName);
     @GET("api/getCategorySearchData")

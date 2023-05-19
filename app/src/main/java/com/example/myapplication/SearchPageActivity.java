@@ -8,17 +8,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.myapplication.domain.ListViewData;
@@ -59,7 +57,6 @@ public class SearchPageActivity extends AppCompatActivity {
         SearchView searchView = findViewById(R.id.search); //SearchView 객체 생성
         String query = getIntent().getStringExtra("search_query"); //Intent로 전달된 값을 가져옴
         searchView.setQuery(query, false); //SearchView에 입력된 값을 적용함.
-
         // 식당 목록 나열해주는 변수 및 함수
         ListView listView = findViewById(R.id.restaurantListView);
         restaurantDataList = new ArrayList<ListViewData>();
@@ -97,6 +94,16 @@ public class SearchPageActivity extends AppCompatActivity {
                 startActivity(reservationIntent);
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String restaurantName = myAdapter.getRestaurantName(position);
+                Intent reservationIntent = new Intent(SearchPageActivity.this, RestaurantInfo.class);
+                reservationIntent.putExtra("restaurantName_query", restaurantName);
+                startActivity(reservationIntent);
+            }
+        });
     }
     // 뒤로가기 버튼 누르면 뒤로
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,7 +120,6 @@ public class SearchPageActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         return preferences.getBoolean("isLogin", false);
     }
-
 
     // 검색된 식당 데이터 가져오기
     private void searchByRestaurantNameList(String restaurantName){

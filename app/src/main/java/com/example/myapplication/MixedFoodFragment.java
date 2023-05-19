@@ -72,7 +72,7 @@ public class MixedFoodFragment extends Fragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_mixed_food, null);
 
         // 식당 목록 나열해주는 변수 및 함수
-        ListView listView = view.findViewById(R.id.restaurantListView);
+        ListView listView = view.findViewById(R.id.mixedFoodListView);
         restaurantDataList = new ArrayList<ListViewData>();
         myAdapter = new MyAdapter(context, restaurantDataList);
         listView.setAdapter(myAdapter);

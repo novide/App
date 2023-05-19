@@ -16,6 +16,10 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".RestaurantInfo"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".SearchPageActivity"
             android:exported="false" />
         <activity
