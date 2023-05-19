@@ -36,4 +36,6 @@ public interface ApiService {
     Call<Map<String, Object>> getRestaurantData();
     @GET("api/getRestaurantSearchData")
     Call<Map<String, Object>> getRestaurantSearchData(@Query("restaurantName")String restaurantName);
+    @GET("api/getCategorySearchData")
+    Call<Map<String, Object>> getCategorySearchData(@Query("category")String category);
 }

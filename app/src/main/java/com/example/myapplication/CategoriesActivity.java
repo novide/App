@@ -119,44 +119,4 @@ public class CategoriesActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         return preferences.getBoolean("isLogin", false);
     }
-
-//
-//    //식당데이터리스트 가져오는 함수
-//    private void getImgListAndRestaurantNameList(){
-//        Call<Map<String, Object>> call = NetworkHelper.getInstance().getApiService().getRestaurantData();
-//        call.enqueue(new Callback<Map<String, Object>>() {
-//            @Override
-//            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
-//                if (response.isSuccessful()) {
-//                    // 데이터를 정상적으로 받아온 경우 처리할 로직을 작성합니다.
-//                    Map<String, Object> data = response.body();
-//                    List<String> restaurantNameList = (List<String>) data.get("restaurantNameList");
-//                    List<String> imageList = (List<String>) data.get("imageList");
-//                    List<Bitmap> imgBitmapList = new ArrayList<>();
-//                    for (String image : imageList) {
-//                        byte[] imageBytes = android.util.Base64.decode(image, android.util.Base64.DEFAULT);
-//                        Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-//                        imgBitmapList.add(bitmap);
-//                    }
-//                    for (int i = 0; i < imgBitmapList.size(); i++) {
-//                        restaurantDataList.add(new ListViewData(i+1, imgBitmapList.get(i), restaurantNameList.get(i)));
-//                    }
-//                    myAdapter.notifyDataSetChanged(); // 리스트뷰 갱신
-//                } else {
-//                    // 데이터를 받아오는 도중 오류가 발생한 경우 처리할 로직을 작성합니다.
-//                    Log.e(TAG, "Response failed"); //username 중복
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
-//                if (t instanceof IOException) {
-//                    Log.e(TAG, "Network failure");
-//                    t.printStackTrace();
-//                } else {
-//                    Log.e(TAG, "Unexpected failure");
-//                }
-//            }
-//        });
-//    }
 }

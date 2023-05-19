@@ -65,6 +65,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
     private EditText restaurant_name;
     private EditText restaurant_loc;
     private EditText restaurant_runtime;
+    private Spinner category_spn;
     private EditText restaurant_menu;
     private EditText restaurant_price;
     private Button restaurant_register_btn;
@@ -89,6 +90,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         restaurant_name = findViewById(R.id.restaurant_name);
         restaurant_loc = findViewById(R.id.restaurant_loc);
         restaurant_runtime = findViewById(R.id.restaurant_runtime);
+        category_spn = findViewById(R.id.spn_SPList);
 
         restaurant_menu = findViewById(R.id.restaurant_menu);
         restaurant_price = findViewById(R.id.restaurant_price);
@@ -284,6 +286,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         String restaurantName = restaurant_name.getText().toString();
         String restaurantLoc = restaurant_loc.getText().toString();
         String restaurantRuntime = restaurant_runtime.getText().toString();
+        String category = category_spn.getSelectedItem().toString();
         // 모든 입력 했는지 확인
         if (restaurantImgUri == null) {
             Toast.makeText(RestaurantRegisterActivity.this, "이미지를 등록하세요", Toast.LENGTH_SHORT).show();
@@ -301,12 +304,16 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
             Toast.makeText(RestaurantRegisterActivity.this, "식당 운영시간을 입력하세요", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (category.isEmpty()){
+            Toast.makeText(RestaurantRegisterActivity.this, "카테고리를 선택하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (menuList.isEmpty()) {
             Toast.makeText(RestaurantRegisterActivity.this, "메뉴를 최소 1개이상 추가해주세요", Toast.LENGTH_SHORT).show();
             return;
         }
         // Restaurant 객체를 생성하고 필드 값들을 설정한 후 서버로 전송
-        RestaurantRequest restaurantRequest = new RestaurantRequest(restaurantName,restaurantLoc,restaurantRuntime,menuList);
+        RestaurantRequest restaurantRequest = new RestaurantRequest(restaurantName,restaurantLoc,restaurantRuntime,category,menuList);
         Gson gson = new Gson();
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), gson.toJson(restaurantRequest));
 
@@ -398,7 +405,6 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
             // ...
             return imgFile;
     }
-        System.out.println("null이 리텀됨");
         return null;
     }
 }
