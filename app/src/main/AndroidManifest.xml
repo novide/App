@@ -18,13 +18,13 @@
         <activity
             android:name=".RestaurantInfo"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".CategoriesActivity"/>
         <activity
             android:name=".SearchPageActivity"
             android:exported="false" />
-        <activity
-            android:name=".MyAdapter"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".MyAdapter"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".RestaurantRegisterActivity"
             android:exported="false" />

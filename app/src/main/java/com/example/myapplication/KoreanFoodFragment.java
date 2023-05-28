@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.myapplication.domain.ListViewData;
@@ -69,7 +71,13 @@ public class KoreanFoodFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_korean_food, null);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_korean_food, container, false);
 
         // 식당 목록 나열해주는 변수 및 함수
         ListView listView = view.findViewById(R.id.koreaFoodListView);
@@ -77,13 +85,17 @@ public class KoreanFoodFragment extends Fragment {
         myAdapter = new MyAdapter(context, restaurantDataList);
         listView.setAdapter(myAdapter);
         searchByKoreanFoodList();
-    }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String restaurantName = myAdapter.getRestaurantName(position);
+                Intent reservationIntent = new Intent(getActivity(), RestaurantInfo.class);
+                reservationIntent.putExtra("restaurantName_query", restaurantName);
+                startActivity(reservationIntent);
+            }
+        });
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_korean_food, container, false);
+        return view;
     }
 
     // 검색된 식당 데이터 가져오기
@@ -103,6 +115,9 @@ public class KoreanFoodFragment extends Fragment {
                         byte[] imageBytes = android.util.Base64.decode(image, android.util.Base64.DEFAULT);
                         Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                         imgBitmapList.add(bitmap);
+                    }
+                    for (String restaurantName:restaurantNameList){
+                        System.out.println(restaurantName);
                     }
                     for (int i = 0; i < imgBitmapList.size(); i++) {
                         restaurantDataList.add(new ListViewData(i+1, imgBitmapList.get(i), restaurantNameList.get(i)));

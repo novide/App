@@ -17,8 +17,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     {
         super(fm);
         arrayList.add(new KoreanFoodFragment());
-        arrayList.add(new JapanFoodFragment());
         arrayList.add(new ChinaFoodFragment());
+        arrayList.add(new JapanFoodFragment());
         arrayList.add(new MixedFoodFragment());
 
         name.add("한식");

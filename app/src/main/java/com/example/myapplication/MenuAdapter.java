@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,7 @@ public class MenuAdapter extends BaseAdapter {
         menuName.setTextColor(Color.BLACK);
 
         menuPrice.setText(sample.get(listViewId).getMenuPrice());
-        menuPrice.setPadding(30, 50, 0, 0);
+        menuPrice.setPadding(130, 50, 0, 0);
         menuPrice.setTextSize(25);
         menuPrice.setTextColor(Color.BLACK);
         return view;

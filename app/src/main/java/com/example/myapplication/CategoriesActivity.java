@@ -35,9 +35,9 @@ public class CategoriesActivity extends AppCompatActivity {
         reservation_bt = findViewById(R.id.reservation_bt3);
         home_bt = findViewById(R.id.home_bt3);
 
-        SearchView searchView = findViewById(R.id.search); //SearchView 객체 생성
-        String query = getIntent().getStringExtra("search_query"); //Intent로 전달된 값을 가져옴
-        searchView.setQuery(query, false); //SearchView에 입력된 값을 적용함.
+//        SearchView searchView = findViewById(R.id.search); //SearchView 객체 생성
+//        String query = getIntent().getStringExtra("search_query"); //Intent로 전달된 값을 가져옴
+//        searchView.setQuery(query, false); //SearchView에 입력된 값을 적용함.
 
 
         viewPager = findViewById(R.id.viewpager);

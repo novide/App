@@ -61,6 +61,8 @@ public class RestaurantInfo extends AppCompatActivity {
         menuAdapter = new MenuAdapter(this, MenuList);
         listView.setAdapter(menuAdapter);
         searchByRestaurantNameList(restaurantName_query);
+
+
     }
 
     // 식당 정보 가져오기
@@ -90,6 +92,7 @@ public class RestaurantInfo extends AppCompatActivity {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
                         int i=0;
                         MenuList.add(new MenuListviewData(i+1,bitmap , menu.getMenuName(), menu.getMenuPrice()));
+
                         i++;
                     }
                     menuAdapter.notifyDataSetChanged();

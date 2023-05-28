@@ -1,6 +1,7 @@
     package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.myapplication.domain.ListViewData;
@@ -25,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-    public class ChinaFoodFragment extends Fragment {
+public class ChinaFoodFragment extends Fragment {
     private static final String TAG = "MainActivity";
 
     // TODO: Rename parameter arguments, choose names that match
@@ -70,8 +72,13 @@ import retrofit2.Response;
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_china_food, null);
+        View view = inflater.inflate(R.layout.fragment_china_food, container, false);
 
         // 식당 목록 나열해주는 변수 및 함수
         ListView listView = view.findViewById(R.id.chinaFoodListView);
@@ -79,14 +86,17 @@ import retrofit2.Response;
         myAdapter = new MyAdapter(context, restaurantDataList);
         listView.setAdapter(myAdapter);
         searchByChinaFoodList();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String restaurantName = myAdapter.getRestaurantName(position);
+                Intent reservationIntent = new Intent(getActivity(), RestaurantInfo.class);
+                reservationIntent.putExtra("restaurantName_query", restaurantName);
+                startActivity(reservationIntent);
+            }
+        });
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_china_food, container, false);
+        return view;
     }
 
     private void searchByChinaFoodList(){

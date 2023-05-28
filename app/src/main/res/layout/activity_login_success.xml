@@ -7,6 +7,33 @@
     android:background="#FFFFFF"
     tools:context=".LoginSuccess">
 
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginBottom="316dp"
+        android:background="#808080"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginBottom="260dp"
+        android:background="#808080"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginBottom="448dp"
+        android:background="#808080"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar6"
         android:layout_width="0dp"
@@ -20,22 +47,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/notice2"
-        android:layout_width="wrap_content"
-        android:layout_height="75dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="316dp"
-        android:foreground="@drawable/notice"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/logout_bt2"
-        android:layout_width="wrap_content"
-        android:layout_height="75dp"
-        android:layout_marginTop="316dp"
-        android:layout_marginEnd="40dp"
+        android:layout_width="86dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="548dp"
+        android:layout_marginEnd="84dp"
         android:foreground="@drawable/log_out"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="@+id/info_bt3"
@@ -43,16 +59,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.492" />
 
-    <Button
-        android:id="@+id/setting_bt2"
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="wrap_content"
-        android:layout_height="75dp"
-        android:layout_marginEnd="160dp"
-        android:foreground="@drawable/setting_bt"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.413" />
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
